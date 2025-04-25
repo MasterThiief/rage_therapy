@@ -1,15 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Login via Twitch</title>
-  </head>
-  <body>
-    <script>
-      const hash = window.location.hash;
-      const token = new URLSearchParams(hash.substring(1)).get("access_token");
+<head>
+  <title>Login via Twitch</title>
+</head>
+<body>
+  <script>
+    const hash = window.location.hash;
+    const token = new URLSearchParams(hash.substring(1)).get("access_token");
+
+    if (token) {
+      // Salva o token no localStorage
       localStorage.setItem("twitch_access_token", token);
-      window.location.href = "https://seu-usuario.github.io/seu-repositorio/jogo.html"; // ou link direto do seu jogo HTML5
-    </script>
-    <p>Processando login...</p>
-  </body>
+
+      // Obtém informações do usuário
+      fetch("https://api.twitch.tv/helix/users", {
+        headers: {
+          "Authorization": "Bearer " + token,
+          "Client-Id": "0ecpr7t67rulyvvzftvmvkr5p3sxlg"
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        const user = data.data[0];
+        localStorage.setItem("twitch_username", user.display_name);
+        // Redireciona de volta para o jogo
+        window.location.href = "URL_DO_SEU_JOGO";
+      })
+      .catch(error => {
+        console.error("Erro ao obter informações do usuário:", error);
+      });
+    } else {
+      document.body.innerHTML = "Erro ao obter o token de acesso.";
+    }
+  </script>
+</body>
 </html>
