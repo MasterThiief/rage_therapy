@@ -5,11 +5,11 @@
   </head>
   <body>
     <script>
-       const hash = window.location.hash;
+      const hash = window.location.hash;
       const token = new URLSearchParams(hash.substring(1)).get("access_token");
-      localStorage.setItem("0ecpr7t67rulyvvzftvmvkr5p3sxlg", token);
-      window.location.href = "https://masterthiief.github.io/rage_therapy/game.html"; // ou link direto do seu jogo HTML5
- </script>
+      localStorage.setItem("twitch_access_token", token);
+      window.location.href = "https://seu-usuario.github.io/seu-repositorio/jogo.html"; // ou link direto do seu jogo HTML5
+    </script>
     <p>Processando login...</p>
   </body>
 </html>
