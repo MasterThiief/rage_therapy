@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html>
-  <head><title>Login Twitch</title></head>
-  <body>
+<head>
+    <title>Twitch Auth Callback</title>
     <script>
-      // Só mostra o token na tela para facilitar a cópia
-      const hash = window.location.hash;
-      document.body.innerHTML = `
-        <h2>Login realizado com sucesso!</h2>
-        <p>Copie este link completo e cole no jogo:</p>
-        <textarea style="width: 100%; height: 100px;">${window.location.href}</textarea>
-      `;
+        // Extrai o token da URL (hash ou query)
+        const hash = window.location.hash.substring(1);
+        const params = new URLSearchParams(hash);
+        const accessToken = params.get('access_token');
+
+        if (accessToken) {
+            // Envia o token de volta para o Godot via JavaScript
+            window.location.href = `godot://twitch_auth?token=${accessToken}`;
+        } else {
+            console.error("Token não encontrado!");
+        }
     </script>
-  </body>
+</head>
+<body>
+    <p>Redirecionando para o Godot...</p>
+</body>
 </html>
